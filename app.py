@@ -163,6 +163,26 @@ if authentication_status:
             xaxis=(dict(showgrid=False))
         )
         st.plotly_chart(fig_count_star, use_container_width=True)
+        
+        # create bar tingkat kepuasan
+        count_puas = feedback_df['Tingkat Kepuasan'].value_counts()
+        count_puas = pd.DataFrame(count_puas).sort_values(by='Tingkat Kepuasan',
+                                                          ascending=False)
+
+        fig_count_puas = px.bar(count_puas,
+                                x=count_puas.index,
+                                y="count",
+                                title="<b>Jumlah Tingkat Kepuasan</b>",
+                                labels={"index": "Tingkat Kepuasan",
+                                        "count":"Jumlah"},
+                                color_discrete_sequence=["#0083B8"] * len(count_puas),
+                                template="plotly_white",
+        )
+        fig_count_puas.update_layout(
+            plot_bgcolor="rgba(0,0,0,0)",
+            xaxis=(dict(showgrid=False))
+        )
+        st.plotly_chart(fig_count_puas, use_container_width=True)
 
     st.button("Re-train Model", use_container_width=True)
     authenticator.logout("Logout", "main")
