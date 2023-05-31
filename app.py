@@ -154,7 +154,7 @@ if authentication_status:
                                 y="count",
                                 title="<b>Jumlah Rating Star</b>",
                                 labels={"index": "Tingkat Bintang",
-                                        "Stars":"Stars"},
+                                        "count":"Stars"},
                                 color_discrete_sequence=["#0083B8"] * len(count_star),
                                 template="plotly_white",
         )
