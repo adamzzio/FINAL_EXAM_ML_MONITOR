@@ -140,8 +140,9 @@ if authentication_status:
             star_rating = ":star:" * int(round(feedback_df['Stars'].mean(), 0))
             st.write(star_rating, "(", np.round(feedback_df['Stars'].mean(), 2), ")")
         with right_column_kpi:
-            st.subheader("Mayoritas Kepuasan")
-            st.write(feedback_df['Tingkat Kepuasan'].mode()[0])
+            st.subheader("Proporsi Kepuasan")
+            proporsi_puas = feedback_df[feedback_df['Tingkat Kepuasan'] == 'Puas'].shape[0] / feedback_df.shape[0]
+            st.write(proporsi_puas)
         st.markdown('<hr>', unsafe_allow_html=True)
         
         # create bar rating star
