@@ -151,7 +151,7 @@ if authentication_status:
 
         fig_count_star = px.bar(count_star,
                                 x=count_star.index,
-                                y="Stars",
+                                y="count",
                                 title="<b>Jumlah Rating Star</b>",
                                 labels={"index": "Tingkat Bintang",
                                         "Stars":"Stars"},
