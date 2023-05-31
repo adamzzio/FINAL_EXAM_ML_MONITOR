@@ -125,6 +125,24 @@ if authentication_status:
         st.dataframe(dataset_ML, use_container_width = True)
         st.write("### Dataset Feedback")
         st.dataframe(feedback_df, use_container_width = True)
+        
+    elif option == 'Dashboard':
+        # load data
+        dataset_ML = load_data_from_firebase()
+        feedback_df = load_data_from_firebase_feedback()
+        feedback_df['Stars'] = feedback_df['Stars'].astype(int)
+        
+        # create KPI dashboard
+        st.markdown('<hr>', unsafe_allow_html=True)
+        left_column_kpi, right_column_kpi = st.columns(2)
+        with left_column_kpi:
+            st.subheader("Rata-rata Rating Bintang")
+            star_rating = ":star:"
+            st.write(star_rating, "(", np.round(feedback_df['Stars'].mean(), 2), ")")
+        with right_column_kpi:
+            st.subheader("Mayoritas Kepuasan")
+            st.write(feedback_df['Tingkat Kepuasan'].mode()[0])
+        st.markdown('<hr>', unsafe_allow_html=True)
 
     st.button("Re-train Model", use_container_width=True)
     authenticator.logout("Logout", "main")
