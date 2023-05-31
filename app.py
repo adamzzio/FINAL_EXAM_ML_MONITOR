@@ -142,7 +142,9 @@ if authentication_status:
         with right_column_kpi:
             st.subheader("Proporsi Kepuasan")
             proporsi_puas = feedback_df[feedback_df['Tingkat Kepuasan'] == 'Puas'].shape[0] / feedback_df.shape[0]
-            st.write(proporsi_puas)
+            proporsi_puas = np.round(proporsi_puas, 2)
+            proporsi_puas = proporsi_puas*100
+            st.write(proporsi_puas, "%")
         st.markdown('<hr>', unsafe_allow_html=True)
         
         # create bar rating star
