@@ -137,7 +137,7 @@ if authentication_status:
         left_column_kpi, right_column_kpi = st.columns(2)
         with left_column_kpi:
             st.subheader("Rata-rata Rating Bintang")
-            star_rating = ":star:"
+            star_rating = ":star:" * int(round(feedback_df['Stars'].mean(), 0))
             st.write(star_rating, "(", np.round(feedback_df['Stars'].mean(), 2), ")")
         with right_column_kpi:
             st.subheader("Mayoritas Kepuasan")
