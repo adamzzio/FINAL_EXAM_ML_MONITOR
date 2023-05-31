@@ -30,16 +30,26 @@ pageicon = Image.open("CardioCheck.png")
 st.set_page_config(page_title="CardioCheck Web App", page_icon=pageicon, layout="wide")
 
 # ===== INITIALIZE DATABASE =====
-# def get_firebase_app():
-#     # Periksa apakah aplikasi Firebase sudah ada
-#     if not firebase_admin._apps:
-#         # Jika belum ada, inisialisasi Firebase Admin SDK
-#         cred = credentials.Certificate("test-db-19c39-firebase-adminsdk-3noie-95deabbed0.json")
-#         firebase_admin.initialize_app(cred)
-#     # Kembalikan referensi ke aplikasi Firebase
-#     return firebase_admin.get_app()
-cred = credentials.Certificate("test-db-19c39-firebase-adminsdk-3noie-95deabbed0.json")
-firebase_admin.initialize_app(cred)
+def get_firebase_app():
+    # Periksa apakah aplikasi Firebase sudah ada
+    if not firebase_admin._apps:
+        # Jika belum ada, inisialisasi Firebase Admin SDK
+        cred = credentials.Certificate("test-db-19c39-firebase-adminsdk-3noie-95deabbed0.json")
+        firebase_admin.initialize_app(cred)
+    # Kembalikan referensi ke aplikasi Firebase
+    return firebase_admin.get_app()
+
+def load_firebase_data():
+    # Dapatkan referensi ke aplikasi Firebase yang sudah diinisialisasi
+    app = get_firebase_app()
+    # Referensi ke koleksi/data di Firebase
+    ref = db.reference('/dataset_ML')
+    # Ambil semua data dari Firebase
+    data = ref.get()
+    # Konversi data menjadi DataFrame
+    df = pd.DataFrame.from_dict(data, orient='index')
+    # Tampilkan DataFrame
+    return df
 
 # ===== SET USERNAME =====
 names = ['Admin']
@@ -95,14 +105,7 @@ if authentication_status:
         ('Pilih Menu', 'Dataset', 'Dashboard'))
     
     if option == 'Dataset':
-        # Referensi ke koleksi/data di Firebase
-        ref = db.reference('/feedback')
-
-        # Ambil semua data dari Firebase
-        data = ref.get()
-
-        # Konversi data menjadi DataFrame
-        df = pd.DataFrame.from_dict(data, orient='index')
+        data = load_firebase_data()
         st.dataframe(df, use_container_width = True)
 
     st.button("Re-train Model", use_container_width=True)
