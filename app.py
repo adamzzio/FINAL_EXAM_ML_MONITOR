@@ -143,6 +143,25 @@ if authentication_status:
             st.subheader("Mayoritas Kepuasan")
             st.write(feedback_df['Tingkat Kepuasan'].mode()[0])
         st.markdown('<hr>', unsafe_allow_html=True)
+        
+        # create bar rating star
+        count_star = feedback_df.groupby('Stars')['Stars'].count()
+        count_star = pd.DataFrame(count_star).sort_values(by='Stars',
+                                                          ascending=False)
+
+        fig_count_star = px.bar(count_star,
+                                x=count_star.index,
+                                y="Stars",
+                                title="<b>Jumlah Rating Star</b>",
+                                labels={"Jumlah": "Stars"},
+                                           color_discrete_sequence=["#0083B8"] * len(count_star),
+                                           template="plotly_white",
+        )
+        fig_count_star.update_layout(
+            plot_bgcolor="rgba(0,0,0,0)",
+            xaxis=(dict(showgrid=False))
+        )
+        st.plotly_chart(fig_count_star, use_container_width=True)
 
     st.button("Re-train Model", use_container_width=True)
     authenticator.logout("Logout", "main")
