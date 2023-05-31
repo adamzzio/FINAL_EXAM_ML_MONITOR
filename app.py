@@ -12,6 +12,13 @@ import streamlit_lottie as st_lottie
 import plotly.express as px
 import matplotlib.pyplot as plt
 
+# database
+from firebase_admin import db
+import firebase_admin
+import csv
+import google.cloud
+from firebase_admin import credentials, firestore
+
 # etc
 from PIL import Image
 import requests
@@ -21,6 +28,18 @@ from pathlib import Path
 # ===== SET PAGE =====
 pageicon = Image.open("CardioCheck.png")
 st.set_page_config(page_title="CardioCheck Web App", page_icon=pageicon, layout="wide")
+
+# ===== INITIALIZE DATABASE =====
+# def get_firebase_app():
+#     # Periksa apakah aplikasi Firebase sudah ada
+#     if not firebase_admin._apps:
+#         # Jika belum ada, inisialisasi Firebase Admin SDK
+#         cred = credentials.Certificate("test-db-19c39-firebase-adminsdk-3noie-95deabbed0.json")
+#         firebase_admin.initialize_app(cred)
+#     # Kembalikan referensi ke aplikasi Firebase
+#     return firebase_admin.get_app()
+cred = credentials.Certificate("test-db-19c39-firebase-adminsdk-3noie-95deabbed0.json")
+firebase_admin.initialize_app(cred)
 
 # ===== SET USERNAME =====
 names = ['Admin']
@@ -72,8 +91,19 @@ if authentication_status:
 
     st.markdown('<hr>', unsafe_allow_html=True)
     option = st.selectbox(
-        'Pilih Menu?',
-        ('Dataset', 'Dashboard', 'Re-train'))
+        '',
+        ('Pilih Menu', 'Dataset', 'Dashboard'))
+    
+    if option == 'Dataset':
+        # Referensi ke koleksi/data di Firebase
+        ref = db.reference('/feedback')
+
+        # Ambil semua data dari Firebase
+        data = ref.get()
+
+        # Konversi data menjadi DataFrame
+        df = pd.DataFrame.from_dict(data, orient='index')
+        st.dataframe(df, use_container_width = True)
 
     st.button("Re-train Model", use_container_width=True)
     authenticator.logout("Logout", "main")
