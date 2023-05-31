@@ -39,6 +39,19 @@ def get_firebase_app():
     # Kembalikan referensi ke aplikasi Firebase
     return firebase_admin.get_app()
 
+def load_data_from_firebase():
+    app = get_firebase_app()
+    db = firestore.client(app)
+    collection_name = "dataset_ML"
+    # Dapatkan semua dokumen dari koleksi "feedback"
+    feedback_docs = db.collection(collection_name).stream()
+    feedback_data = []
+    for doc in feedback_docs:
+        feedback_data.append(doc.to_dict())
+    # Konversi data menjadi DataFrame
+    df = pd.DataFrame(feedback_data)
+    return df
+
 def load_data_from_firebase_feedback():
     app = get_firebase_app()
     db = firestore.client(app)
@@ -106,7 +119,11 @@ if authentication_status:
         ('Pilih Menu', 'Dataset', 'Dashboard'))
     
     if option == 'Dataset':
+        dataset_ML = load_data_from_firebase()
         feedback_df = load_data_from_firebase_feedback()
+        st.write("### Dataset ML")
+        st.dataframe(dataset_ML, use_container_width = True)
+        st.write("### Dataset Feedback")
         st.dataframe(feedback_df, use_container_width = True)
 
     st.button("Re-train Model", use_container_width=True)
