@@ -116,7 +116,7 @@ if authentication_status:
     st.markdown('<hr>', unsafe_allow_html=True)
     option = st.selectbox(
         '',
-        ('Pilih Menu', 'Dataset', 'Dashboard'))
+        ('Pilih Menu', 'Dataset', 'Dashboard', 'Re-train Model'))
     
     if option == 'Dataset':
         dataset_ML = load_data_from_firebase()
@@ -203,6 +203,10 @@ if authentication_status:
             xaxis=(dict(showgrid=False))
         )
         st.plotly_chart(fig_avg_star_puas, use_container_width=True)
-
-    st.button("Re-train Model", use_container_width=True)
+        
+    elif option == 'Re-train Model':
+        st.error('PERINGATAN : INI MESSAGE!')
+        retrain = st.button("Re-train Model", use_container_width=True)
+        if retrain:
+            st.error('PPP TEST')
     authenticator.logout("Logout", "main")
