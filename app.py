@@ -183,6 +183,26 @@ if authentication_status:
             xaxis=(dict(showgrid=False))
         )
         st.plotly_chart(fig_count_puas, use_container_width=True)
+        
+        # create bar avg star by tingkat kepuasan
+        avg_star_puas = feedback_df.groupby('Tingkat Kepuasan')['Stars'].mean()
+        avg_star_puas = pd.DataFrame(avg_star_puas).sort_values(by='Stars',
+                                                                ascending=False)
+
+        fig_avg_star_puas = px.bar(avg_star_puas,
+                                   x=avg_star_puas.index,
+                                   y="Stars",
+                                   title="<b>Rata-rata Rating Bintang berdasarkan Tingkat Kepuasan</b>",
+                                   labels={"Tingkat Kepuasan": "Tingkat Kepuasan",
+                                           "Stars":"Rata-rata Rating Bintang"},
+                                   color_discrete_sequence=["#0083B8"] * len(avg_star_puas),
+                                   template="plotly_white",
+        )
+        fig_avg_star_puas.update_layout(
+            plot_bgcolor="rgba(0,0,0,0)",
+            xaxis=(dict(showgrid=False))
+        )
+        st.plotly_chart(fig_avg_star_puas, use_container_width=True)
 
     st.button("Re-train Model", use_container_width=True)
     authenticator.logout("Logout", "main")
