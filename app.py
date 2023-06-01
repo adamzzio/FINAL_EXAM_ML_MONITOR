@@ -225,9 +225,9 @@ if authentication_status:
         st.error('PERINGATAN : ANDA AKAN MEMPERBARUI MODEL! PASTIKAN UNTUK MENDAPATKAN PERSETUJUAN DARI STAKEHOLDER TERKAIT')
         retrain = st.button("Re-train Model", use_container_width=True)
         if retrain:
-            dataset_ML = load_data_from_firebase()
-            le = LabelEncoder()
-            dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
+#             dataset_ML = load_data_from_firebase()
+#             le = LabelEncoder()
+#             dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
 #             st.dataframe(dataset_ML, use_container_width=True)
             # Load environment variables from .env file
 #             load_dotenv()
@@ -248,26 +248,27 @@ if authentication_status:
             file_content = repo.get_contents(file_path)
             existing_sha = file_content.sha
             file_content = file_content.decoded_content
+            st.write(repo)
 
             # Load the model from the binary content
-            model = pickle.loads(file_content)
+#             model = pickle.loads(file_content)
             
             # Re-train model 
-            X = dataset_ML.drop(columns = ['Result']).values
-            y = dataset_ML['Result'].values
+#             X = dataset_ML.drop(columns = ['Result']).values
+#             y = dataset_ML['Result'].values
             
             # Retrain the model with new data
-            new_model = DecisionTreeClassifier(random_state=42)
-            new_model.fit(X, y)
+#             new_model = DecisionTreeClassifier(random_state=42)
+#             new_model.fit(X, y)
 
             # Update the existing model object with the new model
-            model = new_model
+#             model = new_model
 
             # Convert the model to binary content
-            updated_model_content = pickle.dumps(model)
+#             updated_model_content = pickle.dumps(model)
 
             # Update the file on GitHub
-            repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
+#             repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
             
             st.success("Model has been succesfully retrained and updated")
             
