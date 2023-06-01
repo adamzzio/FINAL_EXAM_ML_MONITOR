@@ -220,14 +220,14 @@ if authentication_status:
         st.plotly_chart(fig_avg_star_puas, use_container_width=True)
         
     elif option == 'Re-train Model':
-        st.error('PERINGATAN : INI MESSAGE!')
+        st.error('PERINGATAN : ANDA AKAN MEMPERBARUI MODEL! PASTIKAN UNTUK MENDAPATKAN PERSETUJUAN DARI STAKEHOLDER TERKAIT')
         retrain = st.button("Re-train Model", use_container_width=True)
         if retrain:
             dataset_ML = load_data_from_firebase()
             le = LabelEncoder()
             dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
-            st.dataframe(dataset_ML, use_container_width=True)
-            st.write(dataset_ML.dtypes)
+#             st.dataframe(dataset_ML, use_container_width=True)
+#             st.write(dataset_ML.dtypes)
             # Replace 'YOUR_ACCESS_TOKEN' with your actual access token
             access_token = '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'
 
