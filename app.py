@@ -79,6 +79,15 @@ def load_data_from_firebase_feedback():
     df = df[["Stars", "Tingkat Kepuasan", "Ulasan"]]
     return df
 
+# ===== LOAD DATABASE =====
+@st.cache_resource
+def load_data():
+    dataset_ML = load_data_from_firebase()
+    feedback_df = load_data_from_firebase_feedback()
+    return dataset_ML, feedback_df
+
+dataset_ML, feedback_df = load_data()
+
 # ===== SET USERNAME =====
 names = ['Admin']
 usernames = ['admin123']
@@ -133,8 +142,8 @@ if authentication_status:
         ('Pilih Menu', 'Dataset', 'Dashboard', 'Re-train Model'))
     
     if option == 'Dataset':
-        dataset_ML = load_data_from_firebase()
-        feedback_df = load_data_from_firebase_feedback()
+#         dataset_ML = load_data_from_firebase()
+#         feedback_df = load_data_from_firebase_feedback()
         st.write("### Dataset ML")
         st.dataframe(dataset_ML, use_container_width = True)
         st.write("### Dataset Feedback")
@@ -142,8 +151,8 @@ if authentication_status:
         
     elif option == 'Dashboard':
         # load data
-        dataset_ML = load_data_from_firebase()
-        feedback_df = load_data_from_firebase_feedback()
+#         dataset_ML = load_data_from_firebase()
+#         feedback_df = load_data_from_firebase_feedback()
         feedback_df['Stars'] = feedback_df['Stars'].astype(int)
         
         # create KPI dashboard
@@ -227,8 +236,8 @@ if authentication_status:
         if retrain:
 #             dataset_ML = load_data_from_firebase()
 #             le = LabelEncoder()
-#             dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
-#             st.dataframe(dataset_ML, use_container_width=True)
+            dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
+            st.dataframe(dataset_ML, use_container_width=True)
             # Load environment variables from .env file
 #             load_dotenv()
 #             # Replace 'YOUR_ACCESS_TOKEN' with your actual access token
