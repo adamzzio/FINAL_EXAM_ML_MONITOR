@@ -54,7 +54,7 @@ def load_data_from_firebase():
     df['Gender'] = df['Gender'].replace("Perempuan", "0")
     df = df[["Age", "Gender", "Heart rate", "Systolic blood pressure", "Diastolic blood pressure",
             "Blood sugar", "CK-MB", "Troponin", "Result"]]
-    cols_int = ["Age", "Gender", "Heart rate", "Systolic blood pressure", "Diastolic blood pressure",
+    cols_int = ["Age", "Heart rate", "Systolic blood pressure", "Diastolic blood pressure",
                 "Blood sugar"]
     cols_float = ["CK-MB", "Troponin"]
     for col in cols_int:
