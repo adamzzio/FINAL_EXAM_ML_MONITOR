@@ -232,7 +232,7 @@ if authentication_status:
             # Load environment variables from .env file
 #             load_dotenv()
 #             # Replace 'YOUR_ACCESS_TOKEN' with your actual access token
-#             access_token = os.getenv('GITHUB_ACCESS_TOKEN')
+            access_token = os.environ.get('ACCESS_TOKEN')
 
 #             # Create a PyGithub instance with your access token
 #             g = Github(access_token)
