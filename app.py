@@ -52,6 +52,15 @@ def load_data_from_firebase():
     df = pd.DataFrame(ML_data)
     df['Gender'] = df['Gender'].str.replace("Laki-laki", "1")
     df['Gender'] = df['Gender'].str.replace("Perempuan", "0")
+    df = df[["Age", "Gender", "Heart rate", "Systolic blood pressure", "Diastolic blood pressure",
+            "Blood sugar", "CK-MB", "Troponin", "Result"]]
+    cols_int = ["Age", "Gender", "Heart rate", "Systolic blood pressure", "Diastolic blood pressure",
+                "Blood sugar"]
+    cols_float = ["CK-MB", "Troponin"]
+    for col in cols_int:
+        df[col] = df[col].astype(int)
+    for col in cols_float:
+        df[col] = df[col].astype(float)
     return df
 
 def load_data_from_firebase_feedback():
@@ -65,6 +74,7 @@ def load_data_from_firebase_feedback():
         feedback_data.append(doc.to_dict())
     # Konversi data menjadi DataFrame
     df = pd.DataFrame(feedback_data)
+    df = df[["Stars", "Tingkat Kepuasan", "Ulasan"]]
     return df
 
 # ===== SET USERNAME =====
