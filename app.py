@@ -234,40 +234,40 @@ if authentication_status:
 #             # Replace 'YOUR_ACCESS_TOKEN' with your actual access token
             access_token = os.environ.get('ACCESS_TOKEN')
 
-#             # Create a PyGithub instance with your access token
-#             g = Github(access_token)
+            # Create a PyGithub instance with your access token
+            g = Github(access_token)
 
-#             repo_owner = 'adamzzio'
-#             repo_name = 'FINAL_EXAM_ML'
-#             file_path = 'model/finalized_model_dt_tuning_v1.sav'
+            repo_owner = 'adamzzio'
+            repo_name = 'FINAL_EXAM_ML'
+            file_path = 'model/finalized_model_dt_tuning_v1.sav'
 
-#             # Get the repository object
-#             repo = g.get_user(repo_owner).get_repo(repo_name)
+            # Get the repository object
+            repo = g.get_user(repo_owner).get_repo(repo_name)
 
-#             # Get the contents of the model file as bytes
-#             file_content = repo.get_contents(file_path)
-#             existing_sha = file_content.sha
-#             file_content = file_content.decoded_content
+            # Get the contents of the model file as bytes
+            file_content = repo.get_contents(file_path)
+            existing_sha = file_content.sha
+            file_content = file_content.decoded_content
 
-#             # Load the model from the binary content
-#             model = pickle.loads(file_content)
+            # Load the model from the binary content
+            model = pickle.loads(file_content)
             
-#             # Re-train model 
-#             X = dataset_ML.drop(columns = ['Result']).values
-#             y = dataset_ML['Result'].values
+            # Re-train model 
+            X = dataset_ML.drop(columns = ['Result']).values
+            y = dataset_ML['Result'].values
             
-#             # Retrain the model with new data
-#             new_model = DecisionTreeClassifier(random_state=42)
-#             new_model.fit(X, y)
+            # Retrain the model with new data
+            new_model = DecisionTreeClassifier(random_state=42)
+            new_model.fit(X, y)
 
-#             # Update the existing model object with the new model
-#             model = new_model
+            # Update the existing model object with the new model
+            model = new_model
 
-#             # Convert the model to binary content
-#             updated_model_content = pickle.dumps(model)
+            # Convert the model to binary content
+            updated_model_content = pickle.dumps(model)
 
-#             # Update the file on GitHub
-#             repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
+            # Update the file on GitHub
+            repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
             
             st.success("Model has been succesfully retrained and updated")
             
