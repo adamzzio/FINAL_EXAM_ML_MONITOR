@@ -109,8 +109,8 @@ if authentication_status:
     # ===== LOAD DATABASE =====
 #     @st.cache_resource
 #     def load_data():
-    dataset_ML = load_data_from_firebase()
-    feedback_df = load_data_from_firebase_feedback()
+#     dataset_ML = load_data_from_firebase()
+#     feedback_df = load_data_from_firebase_feedback()
 #         return dataset_ML, feedback_df
 
 #     dataset_ML, feedback_df = load_data()
@@ -143,8 +143,8 @@ if authentication_status:
         ('Pilih Menu', 'Dataset', 'Dashboard', 'Re-train Model'))
     
     if option == 'Dataset':
-#         dataset_ML = load_data_from_firebase()
-#         feedback_df = load_data_from_firebase_feedback()
+        dataset_ML = load_data_from_firebase()
+        feedback_df = load_data_from_firebase_feedback()
         st.write("### Dataset ML")
         st.dataframe(dataset_ML, use_container_width = True)
         st.write("### Dataset Feedback")
@@ -152,8 +152,8 @@ if authentication_status:
         
     elif option == 'Dashboard':
         # load data
-#         dataset_ML = load_data_from_firebase()
-#         feedback_df = load_data_from_firebase_feedback()
+        dataset_ML = load_data_from_firebase()
+        feedback_df = load_data_from_firebase_feedback()
         feedback_df['Stars'] = feedback_df['Stars'].astype(int)
         
         # create KPI dashboard
@@ -235,13 +235,13 @@ if authentication_status:
         st.error('PERINGATAN : ANDA AKAN MEMPERBARUI MODEL! PASTIKAN UNTUK MENDAPATKAN PERSETUJUAN DARI STAKEHOLDER TERKAIT')
         retrain = st.button("Re-train Model", use_container_width=True)
         if retrain:
-#             dataset_ML = load_data_from_firebase()
-#             le = LabelEncoder()
+            dataset_ML = load_data_from_firebase()
+            le = LabelEncoder()
             dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
             st.dataframe(dataset_ML, use_container_width=True)
             # Load environment variables from .env file
 #             load_dotenv()
-#             # Replace 'YOUR_ACCESS_TOKEN' with your actual access token
+            # Replace 'YOUR_ACCESS_TOKEN' with your actual access token
             access_token = os.environ.get('ACCESS_TOKEN')
 
             # Create a PyGithub instance with your access token
@@ -261,24 +261,24 @@ if authentication_status:
             st.write(repo)
 
             # Load the model from the binary content
-#             model = pickle.loads(file_content)
+            model = pickle.loads(file_content)
             
-            # Re-train model 
-#             X = dataset_ML.drop(columns = ['Result']).values
-#             y = dataset_ML['Result'].values
+            Re-train model 
+            X = dataset_ML.drop(columns = ['Result']).values
+            y = dataset_ML['Result'].values
             
-            # Retrain the model with new data
-#             new_model = DecisionTreeClassifier(random_state=42)
-#             new_model.fit(X, y)
+            Retrain the model with new data
+            new_model = DecisionTreeClassifier(random_state=42)
+            new_model.fit(X, y)
 
-            # Update the existing model object with the new model
-#             model = new_model
+            Update the existing model object with the new model
+            model = new_model
 
-            # Convert the model to binary content
-#             updated_model_content = pickle.dumps(model)
+            Convert the model to binary content
+            updated_model_content = pickle.dumps(model)
 
-            # Update the file on GitHub
-#             repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
+            Update the file on GitHub
+            repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
             
             st.success("Model has been succesfully retrained and updated")
             
