@@ -79,15 +79,6 @@ def load_data_from_firebase_feedback():
     df = df[["Stars", "Tingkat Kepuasan", "Ulasan"]]
     return df
 
-# ===== LOAD DATABASE =====
-@st.cache_resource
-def load_data():
-    dataset_ML = load_data_from_firebase()
-    feedback_df = load_data_from_firebase_feedback()
-    return dataset_ML, feedback_df
-
-dataset_ML, feedback_df = load_data()
-
 # ===== SET USERNAME =====
 names = ['Admin']
 usernames = ['admin123']
@@ -114,6 +105,16 @@ if authentication_status == False:
 if authentication_status == None:
     st.warning("Please Enter Your Username & Password")
 if authentication_status:
+    
+    # ===== LOAD DATABASE =====
+    @st.cache_resource
+    def load_data():
+        dataset_ML = load_data_from_firebase()
+        feedback_df = load_data_from_firebase_feedback()
+        return dataset_ML, feedback_df
+
+    dataset_ML, feedback_df = load_data()
+    
     st.header(f'Welcome {st.session_state["name"]} !')
     st.markdown('<hr>', unsafe_allow_html=True)
     # ===== DEVELOP FRONT-END =====
