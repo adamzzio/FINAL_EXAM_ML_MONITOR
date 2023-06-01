@@ -24,6 +24,7 @@ from PIL import Image
 import requests
 import pickle
 from pathlib import Path
+from sklearn.preprocessing import LabelEncoder
 
 # ===== SET PAGE =====
 pageicon = Image.open("CardioCheck.png")
@@ -221,6 +222,8 @@ if authentication_status:
         retrain = st.button("Re-train Model", use_container_width=True)
         if retrain:
             dataset_ML = load_data_from_firebase()
+            le = LabelEncoder()
+            dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
             st.dataframe(dataset_ML, use_container_width=True)
             st.write(dataset_ML.dtypes)
             st.success("Model has been succesfully retrained and updated")
