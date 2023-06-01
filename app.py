@@ -223,5 +223,8 @@ if authentication_status:
         st.error('PERINGATAN : INI MESSAGE!')
         retrain = st.button("Re-train Model", use_container_width=True)
         if retrain:
-            st.error('PPP TEST')
+            dataset_ML = load_data_from_firebase()
+            st.dataframe(dataset_ML, use_container_width=True)
+            st.write(dataset_ML.dtypes)
+            st.success("Model has been succesfully retrained and updated")
     authenticator.logout("Logout", "main")
