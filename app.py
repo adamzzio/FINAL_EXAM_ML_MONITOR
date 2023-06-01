@@ -50,8 +50,8 @@ def load_data_from_firebase():
         ML_data.append(doc.to_dict())
     # Konversi data menjadi DataFrame
     df = pd.DataFrame(ML_data)
-    df['Gender'] = df['Gender'].str.replace("Laki-laki", "1")
-    df['Gender'] = df['Gender'].str.replace("Perempuan", "0")
+    df['Gender'] = df['Gender'].replace("Laki-laki", "1")
+    df['Gender'] = df['Gender'].replace("Perempuan", "0")
     df = df[["Age", "Gender", "Heart rate", "Systolic blood pressure", "Diastolic blood pressure",
             "Blood sugar", "CK-MB", "Troponin", "Result"]]
     cols_int = ["Age", "Gender", "Heart rate", "Systolic blood pressure", "Diastolic blood pressure",
