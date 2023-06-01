@@ -52,7 +52,7 @@ def load_data_from_firebase():
     df = pd.DataFrame(ML_data)
     gender_dict = {'Laki-Laki': 1,
                    'Perempuan': 0}
-    df['Gender'] = df['Gender'].map(gender_dict)
+    df['Gender'] = df['Gender'].str.replace(gender_dict)
     return df
 
 def load_data_from_firebase_feedback():
