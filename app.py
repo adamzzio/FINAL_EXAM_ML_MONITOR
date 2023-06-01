@@ -263,7 +263,7 @@ if authentication_status:
             # Load the model from the binary content
             model = pickle.loads(file_content)
             
-            Re-train model 
+#             Re-train model 
             X = dataset_ML.drop(columns = ['Result']).values
             y = dataset_ML['Result'].values
             
