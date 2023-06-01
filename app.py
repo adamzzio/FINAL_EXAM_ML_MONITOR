@@ -267,17 +267,17 @@ if authentication_status:
             X = dataset_ML.drop(columns = ['Result']).values
             y = dataset_ML['Result'].values
             
-            Retrain the model with new data
+#             Retrain the model with new data
             new_model = DecisionTreeClassifier(random_state=42)
             new_model.fit(X, y)
 
-            Update the existing model object with the new model
+#             Update the existing model object with the new model
             model = new_model
 
-            Convert the model to binary content
+#             Convert the model to binary content
             updated_model_content = pickle.dumps(model)
 
-            Update the file on GitHub
+#             Update the file on GitHub
             repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
             
             st.success("Model has been succesfully retrained and updated")
