@@ -44,12 +44,15 @@ def load_data_from_firebase():
     db = firestore.client(app)
     collection_name = "dataset_ML"
     # Dapatkan semua dokumen dari koleksi "feedback"
-    feedback_docs = db.collection(collection_name).stream()
-    feedback_data = []
-    for doc in feedback_docs:
-        feedback_data.append(doc.to_dict())
+    ML_docs = db.collection(collection_name).stream()
+    ML_data = []
+    for doc in ML_docs:
+        ML_data.append(doc.to_dict())
     # Konversi data menjadi DataFrame
-    df = pd.DataFrame(feedback_data)
+    df = pd.DataFrame(ML_data)
+    gender_dict = {'Laki-Laki': 1,
+                   'Perempuan': 0}
+    df['Gender'] = df['Gender'].map(gender_dict)
     return df
 
 def load_data_from_firebase_feedback():
