@@ -1,0 +1,4 @@
+- name: run .py file
+  run: python app.py
+  env:
+    ACCESS_TOKEN: ${{ secrets.access_token }}
