@@ -252,7 +252,7 @@ if authentication_status:
             # file_path = 'model/'
             folder_path = 'model'
             file_name = 'finalized_dt_tuning_v2.sav'
-            file_path = f'{folder_path}/{file_name}'
+            file_path = f'{file_name}'
 
             # Get the repository object
             repo = g.get_user(repo_owner).get_repo(repo_name)
