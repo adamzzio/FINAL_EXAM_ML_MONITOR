@@ -249,7 +249,7 @@ if authentication_status:
 
             repo_owner = 'adamzzio'
             repo_name = 'FINAL_EXAM_ML'
-            file_path = 'model/'
+            file_path = 'model/finalized_dt_tuning_v1.sav'
             # folder_path = 'model'
             # file_name = 'finalized_dt_tuning_v2.sav'
             # file_path = f'{file_name}'
