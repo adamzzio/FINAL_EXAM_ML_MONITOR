@@ -249,7 +249,7 @@ if authentication_status:
 
             repo_owner = 'adamzzio'
             repo_name = 'FINAL_EXAM_ML'
-            file_path = 'model/finalized_model_dt_tuning_v1.sav'
+            file_path = 'model_retrain_test.sav'
 
             # Get the repository object
             repo = g.get_user(repo_owner).get_repo(repo_name)
@@ -276,13 +276,7 @@ if authentication_status:
             st.dataframe(new_model.predict(X))
 
             # Convert the model to binary content
-            # Save the updated model to a file
-            filename = 'finalized_model_dt_tuning_v1.sav'
-            pickle.dump(new_model, open(filename, 'wb'))
-
-            # Read the updated model file as bytes
-            with open(filename, 'rb') as file:
-                updated_model_content = file.read()
+            updated_model_content = pickle.dumps(new_model)
 
             # Update the file on GitHub
             repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
