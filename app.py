@@ -238,7 +238,7 @@ if authentication_status:
             dataset_ML = load_data_from_firebase()
             le = LabelEncoder()
             dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
-            st.dataframe(dataset_ML, use_container_width=True)
+#             st.dataframe(dataset_ML, use_container_width=True)
             # Load environment variables from .env file
 #             load_dotenv()
             # Replace 'YOUR_ACCESS_TOKEN' with your actual access token
@@ -258,27 +258,27 @@ if authentication_status:
             file_content = repo.get_contents(file_path)
             existing_sha = file_content.sha
             file_content = file_content.decoded_content
-            st.write(repo)
+            st.write(file_content)
 
             # Load the model from the binary content
             model = pickle.loads(file_content)
             
-#             Re-train model 
-            X = dataset_ML.drop(columns = ['Result']).values
-            y = dataset_ML['Result'].values
+# #             Re-train model 
+#             X = dataset_ML.drop(columns = ['Result']).values
+#             y = dataset_ML['Result'].values
             
-#             Retrain the model with new data
-            new_model = DecisionTreeClassifier(random_state=42)
-            new_model.fit(X, y)
+# #             Retrain the model with new data
+#             new_model = DecisionTreeClassifier(random_state=42)
+#             new_model.fit(X, y)
 
-#             Update the existing model object with the new model
-            model = new_model
+# #             Update the existing model object with the new model
+#             model = new_model
 
-#             Convert the model to binary content
-            updated_model_content = pickle.dumps(model)
+# #             Convert the model to binary content
+#             updated_model_content = pickle.dumps(model)
 
-#             Update the file on GitHub
-            repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
+# #             Update the file on GitHub
+#             repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
             
             st.success("Model has been succesfully retrained and updated")
             
