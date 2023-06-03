@@ -30,6 +30,7 @@ from sklearn.tree import DecisionTreeClassifier
 import os
 from dotenv import load_dotenv
 from sklearn.datasets import load_iris
+from update_model import update
 
 # ===== SET PAGE =====
 pageicon = Image.open("CardioCheck.png")
@@ -243,26 +244,26 @@ if authentication_status:
             # Load environment variables from .env file
 #             load_dotenv()
             # Replace 'YOUR_ACCESS_TOKEN' with your actual access token
-            access_token = os.environ.get('PAT')
+            # access_token = os.environ.get('PAT')
 
             # Create a PyGithub instance with your access token
-            g = Github(access_token)
+            # g = Github(access_token)
 
-            repo_owner = 'adamzzio'
-            repo_name = 'FINAL_EXAM_ML'
-            file_path = 'model/decision_tree_model_test.sav'
+            # repo_owner = 'adamzzio'
+            # repo_name = 'FINAL_EXAM_ML'
+            # file_path = 'model/decision_tree_model_test.sav'
 
             # Get the repository object
-            repo = g.get_user(repo_owner).get_repo(repo_name)
+            # repo = g.get_user(repo_owner).get_repo(repo_name)
 
             # Get the contents of the model file as bytes
-            file_content = repo.get_contents(file_path)
-            existing_sha = file_content.sha
-            file_content = file_content.decoded_content
+            # file_content = repo.get_contents(file_path)
+            # existing_sha = file_content.sha
+            # file_content = file_content.decoded_content
             # st.write(file_content)
 
             # Load the model from the binary content
-            model = pickle.loads(file_content)
+            # model = pickle.loads(file_content)
             
             # Re-train model 
             # X = dataset_ML.drop(columns = ['Result']).values
@@ -283,7 +284,8 @@ if authentication_status:
             updated_model_content = pickle.dumps(model)
 
             # Update the file on GitHub
-            repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
+            # repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
+            update(updated_model_content)
             st.success("Model has been succesfully retrained and updated")
             
     authenticator.logout("Logout", "main")
