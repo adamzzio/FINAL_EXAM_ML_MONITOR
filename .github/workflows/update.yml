@@ -11,6 +11,6 @@ jobs:
 
     steps:
     - name: Run script
-      run: python script.py
+      run: python app.py
       env:
         PAT: ${{ secrets.ACCESS_TOKEN }}
