@@ -261,7 +261,7 @@ if authentication_status:
             # st.write(file_content)
 
             # Load the model from the binary content
-            model = pickle.loads(file_content)
+            # model = pickle.loads(file_content)
             
             # Re-train model 
             X = dataset_ML.drop(columns = ['Result']).values
@@ -272,11 +272,12 @@ if authentication_status:
             new_model.fit(X, y)
 
             # Update the existing model object with the new model
-            model = new_model
-            st.dataframe(model.predict(X))
+            # model = new_model
+            st.dataframe(new_model.predict(X))
 
             # Convert the model to binary content
-            updated_model_content = pickle.dumps(model)
+            filename = 'finalized_model_dt_tuning_v1.sav
+            updated_model_content = pickle.dump(new_model, open(filename, 'wb'))
 
             # Update the file on GitHub
             repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
