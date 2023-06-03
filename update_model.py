@@ -25,5 +25,6 @@ def update(updated_model):
   st.write(file_content)
   st.write(file_path)
   st.write(existing_sha)
+  st.write(access_token)
   # repo.update_file(file_path, "Updated model file", updated_model, existing_sha)
 
