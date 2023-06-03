@@ -258,7 +258,7 @@ if authentication_status:
             file_content = repo.get_contents(file_path)
             existing_sha = file_content.sha
             file_content = file_content.decoded_content
-            st.write(file_content)
+            # st.write(file_content)
 
             # Load the model from the binary content
             model = pickle.loads(file_content)
@@ -275,8 +275,8 @@ if authentication_status:
             model = new_model
             st.dataframe(model.predict(X))
 
-# #             Convert the model to binary content
-#             updated_model_content = pickle.dumps(model)
+            # Convert the model to binary content
+            updated_model_content = pickle.dumps(model)
 
 # #             Update the file on GitHub
 #             repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
