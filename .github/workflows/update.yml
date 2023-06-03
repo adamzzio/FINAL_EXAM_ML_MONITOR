@@ -1,0 +1,9 @@
+name: Update py
+on: [pull_request, push]
+jobs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: update .py file
+        run: python app.py
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
