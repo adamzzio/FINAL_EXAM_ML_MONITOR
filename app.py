@@ -249,10 +249,7 @@ if authentication_status:
 
             repo_owner = 'adamzzio'
             repo_name = 'FINAL_EXAM_ML'
-            file_path = 'model/finalized_dt_tuning_v1.sav'
-            # folder_path = 'model'
-            # file_name = 'finalized_dt_tuning_v2.sav'
-            # file_path = f'{file_name}'
+            file_path = 'model/finalized_model_dt_tuning_v1.sav'
 
             # Get the repository object
             repo = g.get_user(repo_owner).get_repo(repo_name)
@@ -260,18 +257,11 @@ if authentication_status:
             # Get the contents of the model file as bytes
             file_content = repo.get_contents(file_path)
             existing_sha = file_content.sha
-            # Check if the file already exists in the repository
-            #try:
-            #    file_content = repo.get_contents(file_path)
-            #    existing_sha = file_content.sha
-            #    st.write("File already exists in the repository")
-            #except:
-            #    existing_sha = None
-            # file_content = file_content.decoded_content
+            file_content = file_content.decoded_content
             # st.write(file_content)
 
             # Load the model from the binary content
-            # model = pickle.loads(file_content)
+            model = pickle.loads(file_content)
             
             # Re-train model 
             X = dataset_ML.drop(columns = ['Result']).values
@@ -282,18 +272,14 @@ if authentication_status:
             new_model.fit(X, y)
 
             # Update the existing model object with the new model
-            # model = new_model
-            st.dataframe(new_model.predict(X))
+            model = new_model
+            st.dataframe(model.predict(X))
 
             # Convert the model to binary content
-            updated_model_content = pickle.dumps(new_model)
+            updated_model_content = pickle.dumps(model)
 
             # Update the file on GitHub
             # repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
-            # commit_message = "Add new model file"
-            # repo.create_file(file_path, commit_message, updated_model_content)
-            
-            st.write(file_content)
             st.success("Model has been succesfully retrained and updated")
             
     authenticator.logout("Logout", "main")
