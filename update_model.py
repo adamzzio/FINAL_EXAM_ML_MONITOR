@@ -13,7 +13,7 @@ def update(updated_model):
 
   repo_owner = 'adamzzio'
   repo_name = 'FINAL_EXAM_ML'
-  file_path = '/model/decision_tree_model_test.sav'
+  file_path = '/model/decision_tree_model_test1.sav'
 
   # Get the repository object
   repo = g.get_user(repo_owner).get_repo(repo_name)
