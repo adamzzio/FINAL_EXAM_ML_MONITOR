@@ -3,6 +3,7 @@ from pathlib import Path
 from github import Github
 import os
 from dotenv import load_dotenv
+import streamlit as st
 
 def update(updated_model):
   # Replace 'YOUR_ACCESS_TOKEN' with your actual access token
@@ -21,6 +22,8 @@ def update(updated_model):
   file_content = repo.get_contents(file_path)
   existing_sha = file_content.sha
   file_content = file_content.decoded_content
-  
-  repo.update_file(file_path.path, "Updated model file", updated_model, existing_sha)
+  st.write(file_content)
+  st.write(file_path)
+  st.write(existing_sha)
+  # repo.update_file(file_path, "Updated model file", updated_model, existing_sha)
 
