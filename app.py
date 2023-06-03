@@ -285,7 +285,7 @@ if authentication_status:
                 updated_model_content = file.read()
 
             # Update the file on GitHub
-            # repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
+            repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
             st.write(file_content)
             st.success("Model has been succesfully retrained and updated")
             
