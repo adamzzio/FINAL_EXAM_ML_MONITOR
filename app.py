@@ -139,8 +139,8 @@ if authentication_status:
 
     st.markdown('<hr>', unsafe_allow_html=True)
     option = st.selectbox(
-        '',
-        ('Pilih Menu', 'Dataset', 'Dashboard', 'Re-train Model'))
+        'menu',
+        ('Pilih Menu', 'Dataset', 'Dashboard', 'Re-train Model'), label_visibility="hidden")
     
     if option == 'Dataset':
         dataset_ML = load_data_from_firebase()
