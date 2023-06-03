@@ -19,6 +19,6 @@ jobs:
         python-version: 3.9
 
     - name: Run script
-      run: python app.py
+      run: python update_model.py
       env:
         PAT: ${{ secrets.ACCESS_TOKEN }}
