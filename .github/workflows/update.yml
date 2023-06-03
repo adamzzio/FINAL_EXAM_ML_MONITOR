@@ -13,4 +13,4 @@ jobs:
     - name: Run script
       run: python script.py
       env:
-        TOKEN_SECRET_NAME: ${{ secrets.ACCESS_TOKEN }}
+        PAT: ${{ secrets.ACCESS_TOKEN }}
