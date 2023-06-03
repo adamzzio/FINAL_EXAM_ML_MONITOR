@@ -276,7 +276,7 @@ if authentication_status:
             st.dataframe(new_model.predict(X))
 
             # Convert the model to binary content
-            filename = 'finalized_model_dt_tuning_v1.sav
+            filename = 'finalized_model_dt_tuning_v1.sav'
             updated_model_content = pickle.dump(new_model, open(filename, 'wb'))
 
             # Update the file on GitHub
