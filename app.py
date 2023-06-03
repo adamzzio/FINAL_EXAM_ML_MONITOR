@@ -29,6 +29,7 @@ from github import Github
 from sklearn.tree import DecisionTreeClassifier
 import os
 from dotenv import load_dotenv
+from sklearn.datasets import load_iris
 
 # ===== SET PAGE =====
 pageicon = Image.open("CardioCheck.png")
@@ -235,9 +236,9 @@ if authentication_status:
         st.error('PERINGATAN : ANDA AKAN MEMPERBARUI MODEL! PASTIKAN UNTUK MENDAPATKAN PERSETUJUAN DARI STAKEHOLDER TERKAIT')
         retrain = st.button("Re-train Model", use_container_width=True)
         if retrain:
-            dataset_ML = load_data_from_firebase()
-            le = LabelEncoder()
-            dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
+            # dataset_ML = load_data_from_firebase()
+            # le = LabelEncoder()
+            # dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
 #             st.dataframe(dataset_ML, use_container_width=True)
             # Load environment variables from .env file
 #             load_dotenv()
@@ -249,7 +250,7 @@ if authentication_status:
 
             repo_owner = 'adamzzio'
             repo_name = 'FINAL_EXAM_ML'
-            file_path = 'model/finalized_model_dt_tuning_v1.sav'
+            file_path = 'model/decision_tree_model_test.sav'
 
             # Get the repository object
             repo = g.get_user(repo_owner).get_repo(repo_name)
@@ -264,8 +265,11 @@ if authentication_status:
             model = pickle.loads(file_content)
             
             # Re-train model 
-            X = dataset_ML.drop(columns = ['Result']).values
-            y = dataset_ML['Result'].values
+            # X = dataset_ML.drop(columns = ['Result']).values
+            # y = dataset_ML['Result'].values
+            iris = load_iris()
+            X = iris.data
+            y = iris.target
             
             # Retrain the model with new data
             new_model = DecisionTreeClassifier(random_state=42)
