@@ -276,11 +276,16 @@ if authentication_status:
             st.dataframe(new_model.predict(X))
 
             # Convert the model to binary content
+            # Save the updated model to a file
             filename = 'finalized_model_dt_tuning_v1.sav'
-            updated_model_content = pickle.dump(new_model, open(filename, 'wb'))
+            pickle.dump(new_model, open(filename, 'wb'))
+
+            # Read the updated model file as bytes
+            with open(filename, 'rb') as file:
+                updated_model_content = file.read()
 
             # Update the file on GitHub
-            # repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
+            repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
             
             st.success("Model has been succesfully retrained and updated")
             
