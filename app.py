@@ -249,14 +249,24 @@ if authentication_status:
 
             repo_owner = 'adamzzio'
             repo_name = 'FINAL_EXAM_ML'
-            file_path = 'model_retrain_test.sav'
+            # file_path = 'model/'
+            folder_path = 'model'
+            file_name = 'finalized_dt_tuning_v2.sav'
+            file_path = f'{folder_path}/{file_name}'
 
             # Get the repository object
             repo = g.get_user(repo_owner).get_repo(repo_name)
 
             # Get the contents of the model file as bytes
-            file_content = repo.get_contents(file_path)
-            existing_sha = file_content.sha
+            # file_content = repo.get_contents(file_path)
+            # existing_sha = file_content.sha
+            # Check if the file already exists in the repository
+            try:
+                file_content = repo.get_contents(file_path)
+                existing_sha = file_content.sha
+                st.write("File already exists in the repository")
+            except:
+                existing_sha = None
             # file_content = file_content.decoded_content
             # st.write(file_content)
 
@@ -279,7 +289,10 @@ if authentication_status:
             updated_model_content = pickle.dumps(new_model)
 
             # Update the file on GitHub
-            repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
+            # repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
+            commit_message = "Add new model file"
+            repo.create_file(file_path, commit_message, updated_model_content)
+            
             st.write(file_content)
             st.success("Model has been succesfully retrained and updated")
             
