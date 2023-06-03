@@ -278,8 +278,8 @@ if authentication_status:
             # Convert the model to binary content
             updated_model_content = pickle.dumps(model)
 
-# #             Update the file on GitHub
-#             repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
+            # Update the file on GitHub
+            repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
             
             st.success("Model has been succesfully retrained and updated")
             
