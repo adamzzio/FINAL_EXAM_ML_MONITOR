@@ -22,5 +22,5 @@ def update(updated_model):
   existing_sha = file_content.sha
   file_content = file_content.decoded_content
   
-  repo.update_file(file_path, "Updated model file", updated_model, existing_sha)
+  repo.update_file(file_path.path, "Updated model file", updated_model, existing_sha)
 
