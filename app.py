@@ -263,16 +263,17 @@ if authentication_status:
             # Load the model from the binary content
             model = pickle.loads(file_content)
             
-# #             Re-train model 
-#             X = dataset_ML.drop(columns = ['Result']).values
-#             y = dataset_ML['Result'].values
+            # Re-train model 
+            X = dataset_ML.drop(columns = ['Result']).values
+            y = dataset_ML['Result'].values
             
-# #             Retrain the model with new data
-#             new_model = DecisionTreeClassifier(random_state=42)
-#             new_model.fit(X, y)
+            $ Retrain the model with new data
+            new_model = DecisionTreeClassifier(random_state=42)
+            new_model.fit(X, y)
 
-# #             Update the existing model object with the new model
-#             model = new_model
+            # Update the existing model object with the new model
+            model = new_model
+            st.dataframe(model.predict(X))
 
 # #             Convert the model to binary content
 #             updated_model_content = pickle.dumps(model)
