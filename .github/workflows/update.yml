@@ -1,9 +1,16 @@
-name: Update py
-on: [pull_request, push]
+name: Update Model
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: update .py file
-        run: python app.py
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+    - name: Run script
+      run: python script.py
+      env:
+        TOKEN_SECRET_NAME: ${{ secrets.ACCESS_TOKEN }}
