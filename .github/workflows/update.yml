@@ -1,9 +1,6 @@
 name: Update Model
 
 on:
-  push:
-    branches:
-      - main
   schedule:
     - cron: "*/15 * * * *"
 
