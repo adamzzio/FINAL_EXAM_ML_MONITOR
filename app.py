@@ -128,7 +128,7 @@ if authentication_status:
             return None
         return r.json()
 
-    lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_CdU3jV.json")
+    lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_uwWgICKCxj.json")
 
     intro_column_left, intro_column_right = st.columns(2)
     with st.container():
