@@ -27,7 +27,7 @@ def update(updated_model):
   st.write(file_path)
   st.write(existing_sha)
   st.write(access_token)
-  # repo.update_file(file_path, "Updated model file", updated_model, existing_sha)
-  github.enable_console_debug_logging()
-  repo.create_file("test.txt", "test", "test")
+  repo.update_file(file_content.path, "Updated model file", updated_model, existing_sha, branch="main")
+  st.write(github.enable_console_debug_logging())
+  # repo.create_file("test.txt", "test", "test")
 
