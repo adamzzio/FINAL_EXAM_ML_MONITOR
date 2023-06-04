@@ -237,6 +237,7 @@ if authentication_status:
         st.error('PERINGATAN : ANDA AKAN MEMPERBARUI MODEL! PASTIKAN UNTUK MENDAPATKAN PERSETUJUAN DARI STAKEHOLDER TERKAIT')
         retrain = st.button("Re-train Model", use_container_width=True)
         if retrain:
+            st.success('Testing')
             # dataset_ML = load_data_from_firebase()
             # le = LabelEncoder()
             # dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
