@@ -290,6 +290,8 @@ if authentication_status:
             # st.success("Model has been succesfully retrained and updated")
             
             # ===== TESTING =====
+st.sidebar.header('Re-training Model')
+st.sidebar.markdown('<hr>', unsafe_allow_html=True)
 access_token = st.sidebar.text_input('Masukkan Token', type='password')
 submit = st.sidebar.button('Submit')
 if submit:
