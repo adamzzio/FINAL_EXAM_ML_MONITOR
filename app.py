@@ -30,7 +30,7 @@ from sklearn.tree import DecisionTreeClassifier
 import os
 from dotenv import load_dotenv
 from sklearn.datasets import load_iris
-from update_model import update
+# from update_model import update
 
 # ===== SET PAGE =====
 pageicon = Image.open("CardioCheck.png")
