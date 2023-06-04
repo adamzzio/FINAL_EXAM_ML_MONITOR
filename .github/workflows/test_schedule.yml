@@ -1,0 +1,30 @@
+name: Scheduled Modification
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+
+jobs:
+  modify-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Modify file
+        run: |
+          # Perform the modifications you want on the file
+          echo "New content" > FINAL_EXAM_ML/model/decision_tree_model_test1.sav
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "adam.maurizio69@gmail.com"
+          git config --local user.name "adamzzio"
+          git add FINAL_EXAM_ML/model/decision_tree_model_test1.sav
+          git commit -m "Scheduled modification"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          PAT: ${{ secrets.ACCESS_TOKEN }}
