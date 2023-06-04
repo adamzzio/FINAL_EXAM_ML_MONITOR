@@ -22,7 +22,7 @@ def update(updated_model):
   # Get the contents of the model file as bytes
   file_content = repo.get_contents(file_path)
   existing_sha = file_content.sha
-  file_content = file_content.decoded_content
+  # file_content = file_content.decoded_content
   st.write(file_content)
   st.write(file_path)
   st.write(existing_sha)
