@@ -285,7 +285,7 @@ if authentication_status:
 
             # Update the file on GitHub
             # repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
-            update(updated_model_content)
+            # update(updated_model_content)
             st.success("Model has been succesfully retrained and updated")
             
     authenticator.logout("Logout", "main")
