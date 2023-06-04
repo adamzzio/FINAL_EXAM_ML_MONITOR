@@ -21,7 +21,10 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
-    - name: Run script
+    - name: Run script UI
+      run: python app.py
+    
+    - name: Run script model
       run: python update_model.py
       env:
         PAT: ${{ secrets.ACCESS_TOKEN }}
