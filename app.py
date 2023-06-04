@@ -121,7 +121,7 @@ if authentication_status:
     st.markdown('<hr>', unsafe_allow_html=True)
     # ===== DEVELOP FRONT-END =====
     # SET HEADER PAGE
-    st.header('CardioCheck: Monitoring & Retraining Model')
+    # st.header('CardioCheck: Monitoring & Retraining Model')
     def load_lottieurl(url):
         r = requests.get(url)
         if r.status_code != 200:
@@ -136,8 +136,8 @@ if authentication_status:
             # st.title(":bar_chart: Dashboard")
             st.markdown(
                 '<div style="text-align: justify; font-size:300%; line-height: 150%; margin-top: -55px;"> <b><br>CardioCheck: Monitoring & Retraining Model </b> </div>', unsafe_allow_html=True)
-        # with intro_column_right:
-        #     st_lottie(lottie_coding, height=250, key="dashboard")
+        with intro_column_right:
+            st_lottie(lottie_coding, height=250, key="dashboard")
 
     st.markdown('<hr>', unsafe_allow_html=True)
     option = st.selectbox(
