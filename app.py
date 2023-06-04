@@ -122,22 +122,22 @@ if authentication_status:
     # ===== DEVELOP FRONT-END =====
     # SET HEADER PAGE
     st.header('CardioCheck: Monitoring & Retraining Model')
-    # def load_lottieurl(url):
-    #     r = requests.get(url)
-    #     if r.status_code != 200:
-    #         return None
-    #     return r.json()
+    def load_lottieurl(url):
+        r = requests.get(url)
+        if r.status_code != 200:
+            return None
+        return r.json()
 
-    # lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_CdU3jV.json")
+    lottie_coding = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_CdU3jV.json")
 
-    # intro_column_left, intro_column_right = st.columns(2)
-    # with st.container():
-    #     with intro_column_left:
-    #         # st.title(":bar_chart: Dashboard")
-    #         st.markdown(
-    #             '<div style="text-align: justify; font-size:300%; line-height: 150%; margin-top: -55px;"> <b><br>CardioCheck: Monitoring & Retraining Model </b> </div>', unsafe_allow_html=True)
-    #     # with intro_column_right:
-    #     #     st_lottie(lottie_coding, height=250, key="dashboard")
+    intro_column_left, intro_column_right = st.columns(2)
+    with st.container():
+        with intro_column_left:
+            # st.title(":bar_chart: Dashboard")
+            st.markdown(
+                '<div style="text-align: justify; font-size:300%; line-height: 150%; margin-top: -55px;"> <b><br>CardioCheck: Monitoring & Retraining Model </b> </div>', unsafe_allow_html=True)
+        # with intro_column_right:
+        #     st_lottie(lottie_coding, height=250, key="dashboard")
 
     st.markdown('<hr>', unsafe_allow_html=True)
     option = st.selectbox(
@@ -160,17 +160,23 @@ if authentication_status:
         
         # create KPI dashboard
         st.markdown('<hr>', unsafe_allow_html=True)
-        left_column_kpi, right_column_kpi = st.columns(2)
+        left_column_kpi, mid_column_kpi, right_column_kpi = st.columns(3)
         with left_column_kpi:
-            st.subheader("Rata-rata Rating Bintang")
+            # st.subheader("Rata-rata Rating Bintang")
             star_rating = ":star:" * int(round(feedback_df['Stars'].mean(), 0))
-            st.write(star_rating, "(", np.round(feedback_df['Stars'].mean(), 2), ")")
-        with right_column_kpi:
-            st.subheader("Proporsi Kepuasan")
+            # st.write(star_rating, "(", np.round(feedback_df['Stars'].mean(), 2), ")")
+            st.metric(label='Rating Bintang', value=star_rating)
+        with mid_column_kpi:
+            # st.subheader("Proporsi Kepuasan")
             proporsi_puas = feedback_df[feedback_df['Tingkat Kepuasan'] == 'Puas'].shape[0] / feedback_df.shape[0]
             proporsi_puas = np.round(proporsi_puas, 2)
             proporsi_puas = proporsi_puas*100
-            st.write(proporsi_puas, "%")
+            st.metric(label='Proporsi Kepuasan (%)', value=proporsi_puas)
+        with right_column_kpi:
+            count_data_update = len(dataset_ML)
+            count_data_old = 1319
+            selisih = count_data_update - count_data_old
+            st.metric(label='Jumlah Data', value=count_data_update, delta=selisih)
         st.markdown('<hr>', unsafe_allow_html=True)
         
         # create bar rating star
@@ -232,64 +238,8 @@ if authentication_status:
             xaxis=(dict(showgrid=False))
         )
         st.plotly_chart(fig_avg_star_puas, use_container_width=True)
-        
-#     elif option == 'Re-train Model':
-#         st.error('PERINGATAN : ANDA AKAN MEMPERBARUI MODEL! PASTIKAN UNTUK MENDAPATKAN PERSETUJUAN DARI STAKEHOLDER TERKAIT')
-#         retrain = st.button("Re-train Model", use_container_width=True)
-#         if retrain:
-#             st.success('Testing')
-            # dataset_ML = load_data_from_firebase()
-            # le = LabelEncoder()
-            # dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
-#             st.dataframe(dataset_ML, use_container_width=True)
-            # Load environment variables from .env file
-#             load_dotenv()
-            # Replace 'YOUR_ACCESS_TOKEN' with your actual access token
-            # access_token = os.environ.get('PAT')
-
-            # Create a PyGithub instance with your access token
-            # g = Github(access_token)
-
-            # repo_owner = 'adamzzio'
-            # repo_name = 'FINAL_EXAM_ML'
-            # file_path = 'model/decision_tree_model_test.sav'
-
-            # Get the repository object
-            # repo = g.get_user(repo_owner).get_repo(repo_name)
-
-            # Get the contents of the model file as bytes
-            # file_content = repo.get_contents(file_path)
-            # existing_sha = file_content.sha
-            # file_content = file_content.decoded_content
-            # st.write(file_content)
-
-            # Load the model from the binary content
-            # model = pickle.loads(file_content)
             
-            # Re-train model 
-            # X = dataset_ML.drop(columns = ['Result']).values
-            # y = dataset_ML['Result'].values
-            # iris = load_iris()
-            # X = iris.data
-            # y = iris.target
-            
-            # Retrain the model with new data
-            # new_model = DecisionTreeClassifier(random_state=42)
-            # new_model.fit(X, y)
-
-            # Update the existing model object with the new model
-            # model = new_model
-            # st.dataframe(model.predict(X))
-
-            # Convert the model to binary content
-            # updated_model_content = pickle.dumps(model)
-
-            # Update the file on GitHub
-            # repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
-            # update(updated_model_content)
-            # st.success("Model has been succesfully retrained and updated")
-            
-            # ===== TESTING =====
+# ===== RETRAINING =====
 st.sidebar.header('Re-training Model')
 st.sidebar.markdown('<hr>', unsafe_allow_html=True)
 access_token = st.sidebar.text_input('Masukkan Token', type='password')
@@ -331,4 +281,4 @@ if submit:
     st.sidebar.success("Model has been succesfully retrained and updated")
                 
             
-    authenticator.logout("Logout", "sidebar")
+authenticator.logout("Logout", "sidebar")
