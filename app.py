@@ -142,7 +142,7 @@ if authentication_status:
     st.markdown('<hr>', unsafe_allow_html=True)
     option = st.selectbox(
         'menu',
-        ('Pilih Menu', 'Dataset', 'Dashboard', 'Re-train Model'), label_visibility="hidden")
+        ('Pilih Menu', 'Dataset', 'Dashboard'), label_visibility="hidden")
     
     if option == 'Dataset':
         dataset_ML = load_data_from_firebase()
@@ -233,11 +233,11 @@ if authentication_status:
         )
         st.plotly_chart(fig_avg_star_puas, use_container_width=True)
         
-    elif option == 'Re-train Model':
-        st.error('PERINGATAN : ANDA AKAN MEMPERBARUI MODEL! PASTIKAN UNTUK MENDAPATKAN PERSETUJUAN DARI STAKEHOLDER TERKAIT')
-        retrain = st.button("Re-train Model", use_container_width=True)
-        if retrain:
-            st.success('Testing')
+#     elif option == 'Re-train Model':
+#         st.error('PERINGATAN : ANDA AKAN MEMPERBARUI MODEL! PASTIKAN UNTUK MENDAPATKAN PERSETUJUAN DARI STAKEHOLDER TERKAIT')
+#         retrain = st.button("Re-train Model", use_container_width=True)
+#         if retrain:
+#             st.success('Testing')
             # dataset_ML = load_data_from_firebase()
             # le = LabelEncoder()
             # dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
@@ -293,12 +293,27 @@ if authentication_status:
 access_token = st.sidebar.text_input('Masukkan Token', type='password')
 submit = st.sidebar.button('Submit')
 if submit:
+    # Load Datasets
+    dataset_ML = load_data_from_firebase()
+    le = LabelEncoder()
+    dataset_ML['Result'] = le.fit_transform(dataset_ML['Result'])
+    
+    X = dataset_ML.drop(columns = ['Result']).values
+    y = dataset_ML['Result'].values
+    
+    # Retrain the model with new data
+    new_model = DecisionTreeClassifier(random_state=42, max_depth=5)
+    new_model.fit(X, y)
+    
+    # Convert the model to binary content
+    updated_model_content = pickle.dumps(new_model)
+    
     # Create a PyGithub instance with your access token
     g = Github(access_token)
 
     repo_owner = 'adamzzio'
     repo_name = 'FINAL_EXAM_ML'
-    file_path = 'model/decision_tree_model_test1.sav'
+    file_path = 'model/finalized_model_lgbm_tuning.sav'
 
     # Get the repository object
     repo = g.get_user(repo_owner).get_repo(repo_name)
@@ -307,28 +322,6 @@ if submit:
     file_content = repo.get_contents(file_path)
     existing_sha = file_content.sha
     file_content = file_content.decoded_content
-    # st.write(file_content)
-
-    # Load the model from the binary content
-    model = pickle.loads(file_content)
-
-    # Re-train model 
-    # X = dataset_ML.drop(columns = ['Result']).values
-    # y = dataset_ML['Result'].values
-    iris = load_iris()
-    X = iris.data
-    y = iris.target
-
-    # Retrain the model with new data
-    new_model = DecisionTreeClassifier(random_state=42)
-    new_model.fit(X, y)
-
-    # Update the existing model object with the new model
-    model = new_model
-    # st.dataframe(model.predict(X))
-
-    # Convert the model to binary content
-    updated_model_content = pickle.dumps(model)
 
     # Update the file on GitHub
     repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
@@ -336,4 +329,4 @@ if submit:
     st.sidebar.success("Model has been succesfully retrained and updated")
                 
             
-    authenticator.logout("Logout", "main")
+    authenticator.logout("Logout", "sidebar")
