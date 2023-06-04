@@ -286,6 +286,53 @@ if authentication_status:
             # Update the file on GitHub
             # repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
             # update(updated_model_content)
-            st.success("Model has been succesfully retrained and updated")
+            # st.success("Model has been succesfully retrained and updated")
+            
+            # ===== TESTING =====
+            access_token = st.text_input('Masukkan Token', type='password')
+            submit = st.button('Submit')
+            if submit:
+                # Create a PyGithub instance with your access token
+                g = Github(access_token)
+
+                repo_owner = 'adamzzio'
+                repo_name = 'FINAL_EXAM_ML'
+                file_path = 'model/decision_tree_model_test.sav'
+
+                # Get the repository object
+                repo = g.get_user(repo_owner).get_repo(repo_name)
+
+                # Get the contents of the model file as bytes
+                file_content = repo.get_contents(file_path)
+                existing_sha = file_content.sha
+                file_content = file_content.decoded_content
+                # st.write(file_content)
+
+                # Load the model from the binary content
+                model = pickle.loads(file_content)
+            
+                # Re-train model 
+                # X = dataset_ML.drop(columns = ['Result']).values
+                # y = dataset_ML['Result'].values
+                iris = load_iris()
+                X = iris.data
+                y = iris.target
+            
+                # Retrain the model with new data
+                new_model = DecisionTreeClassifier(random_state=42)
+                new_model.fit(X, y)
+
+                # Update the existing model object with the new model
+                model = new_model
+                # st.dataframe(model.predict(X))
+
+                # Convert the model to binary content
+                updated_model_content = pickle.dumps(model)
+
+                # Update the file on GitHub
+                repo.update_file(file_path, "Updated model file", updated_model_content, existing_sha)
+                # update(updated_model_content)
+                st.success("Model has been succesfully retrained and updated")
+                
             
     authenticator.logout("Logout", "main")
