@@ -163,7 +163,7 @@ if authentication_status:
         left_column_kpi, mid_column_kpi, right_column_kpi = st.columns(3)
         with left_column_kpi:
             # st.subheader("Rata-rata Rating Bintang")
-            star_rating = ":star:" * int(round(feedback_df['Stars'].mean(), 0))
+            star_rating = np.round(feedback_df['Stars'].mean(), 2)
             # st.write(star_rating, "(", np.round(feedback_df['Stars'].mean(), 2), ")")
             st.metric(label='Rating Bintang', value=star_rating)
         with mid_column_kpi:
